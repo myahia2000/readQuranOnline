@@ -1,0 +1,81 @@
+﻿body
+{
+    margin: 0px;
+    padding: 0px;
+    background-color: #fdf6e2;
+}
+
+.pageSpan
+{
+    line-height:155%;
+}
+.ayaColor
+{
+    color: #000000;
+}
+.imgFrame
+{
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    z-index:0;
+}
+#ayaDiv 
+{
+    direction:rtl;
+    text-align:center;
+    font-size:15pt;
+    vertical-align:middle;
+    margin:auto;
+    /* background-image: url('ayaFram@2x.png');  actual image size = 396px by 64px 
+     background-size: 320px 196px;
+     width:320px;
+     height:196px;
+     background-repeat:no-repeat;*/
+    
+}
+
+@font-face
+{
+    font-family: AQF_BSML;
+    src: url('AQF_BSML.svg#AQF_BSML') format('svg');
+}
+.MainPageTable
+{
+    overflow: visible; width: 100%;direction: rtl;z-index: 1;
+}
+.FrameDiv
+{
+    height:19px;width:100%;
+}
+.ayaBody
+{
+    overflow-x:scroll;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    #mainDiv {
+        background-image: url('PageFram@2x.png'); /* actual image size = 396px by 64px */
+        background-size: 320px 480px;
+        width:320px;
+        height:480px;
+        background-repeat:no-repeat;
+        
+    }
+   
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1) {
+    #mainDiv {
+        background-image: url('PageFram@2x.png'); /* actual image size = 396px by 64px */
+        background-size: 320px 480px;
+        width:320px;
+        height:480px;
+        background-repeat:no-repeat;
+        
+    }
+    
+}
+
+
+

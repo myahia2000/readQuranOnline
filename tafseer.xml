@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+	<item>     
+		<name>تفسير البغوي</name>
+		<tag>ksdio_tfseer_baghawy</tag>
+	</item>
+	<item>     
+		<name> تفسير القران العظيم</name>
+		<tag>ksdio_tfseer_katheer</tag>
+	</item>
+	<item>     
+		<name>التفسير الكبير ( مفاتيح الغيب)</name>
+		<tag>ksdio_tfseer_mafateh</tag>
+	</item>
+
+	<item>
+		<name>االتفسير لميسر </name>
+		<tag>ksdio_tfseer_muyassar</tag>
+	</item>
+
+
+	<item>
+		<name>تفسير القرطبي </name>
+		<tag>ksdio_tfseer_qortoby</tag>
+	</item>
+
+
+	<item>
+	<name>تفسير السعدي</name>
+	<tag>ksdio_tfseer_sa3dy</tag>
+</item>
+
+
+
+
+	<item>
+		<name>تفسير التحرير والتنوير</name>
+		<tag>ksdio_tfseer_tanweer</tag>
+	</item>
+
+	<item>
+		<name>تفسير الطبري</name>
+		<tag>ksdio_tfseer_tabary</tag>
+	</item>
+
+	<item>
+		<name>ظلال القران</name>
+		<tag>ksdio_tfseer_thlal</tag>
+	</item>
+
+	<item>
+		<name>تفسير الوسيط </name>
+		<tag>ksdio_tfseer_waseet</tag>
+	</item>
+</items>

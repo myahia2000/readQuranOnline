@@ -1,0 +1,228 @@
+html {
+    direction: rtl;
+    font-family: "Simplified Arabic";
+    font-size: 17px;
+    background: #352a24;
+}
+*{
+    
+    box-sizing: border-box;
+}
+
+body {
+    border: 4px solid #352a24;
+    background: #f1ecd9;
+    border-radius: 17px;
+    margin: 12px 0px 0px 0px;
+    padding: 20px 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+.tadobr_ayah ,.instructions .ayah,.todo .ayah{
+    font-family: "me_quran";
+    word-spacing: 6px;
+}
+
+.ayah {
+    color: #000000;
+}
+
+ol > li .ayah {
+    color: #960505;
+}
+
+.source {
+    color: #960505;
+    font-family: 'DroidArabicKufi', Arial;
+    font-size: 14px;
+}
+
+.qus {
+    color: #4b7100;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #4C6231;
+}
+
+.wagfah {
+    text-align: justify;
+    color: #17395C;
+    font-weight: bold;
+}
+
+.title_tadabor {
+    font-family: 'DroidArabicKufi', Arial !important;
+    float: right;
+    color: #91641c !important;
+    border-bottom: 1px solid #e5c557;
+    padding: 0px 0px 0px 20px;
+    font-size: 20px !important;
+}
+
+.tadabor-item .num {
+    color: #FFF;
+    background: #7C1C22;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    display: inline-block;
+    margin-left: 5px;
+    border-radius: 50%;
+    font-family: 'DroidArabicKufi';
+    font-size: 14px;
+}
+
+.title_tadabor:after {
+    content: '•';
+    color: #e5c557 !important;
+    position: absolute;
+    margin: 16px 17px 0px 0px;
+    font-size: 25px !important;
+}
+
+.tadabor-item, ol > li {
+    border: 1px solid #EBD898;
+    padding: 5px;
+    margin: 10px 0px;
+    border-radius: 15px;
+    background: #F7F5EB;
+    box-shadow: 0px 0px 5px #E7E2D0;
+    font-size: 17px;
+    font-family: "Simplified Arabic";
+    display: inline-block;
+    overflow: hidden;
+}
+
+ol {
+    counter-reset: li;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+ol > li {
+    position: relative;
+    margin: 15px 30px 15px 0px;
+    list-style: none;
+    border-top-right-radius: 0px;
+}
+
+ol > li:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    right: -2em;
+    box-sizing: border-box;
+    width: 2em;
+    margin-left: 8px;
+    padding: 4px;
+    color: #fff;
+    background: #9E7E00;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    border-radius: 0 15px 15px 0px;
+    box-shadow: inset 10px 0px 10px -12px #000;
+}
+
+table.means {
+    border: 1px solid #EBD898;
+    border-radius: 15px;
+    background: #F7F5EB;
+    box-shadow: 0px 0px 5px #E7E2D0;
+    font-size: 17px;
+    font-family: "Simplified Arabic";
+    color: #9E7E00;
+    margin: 20px -5px;
+    border-spacing: 0;
+    overflow: hidden;
+    width: 104%;
+}
+
+table.means>thead {
+    background: #9E7E00;
+    color: #fff;
+}
+
+table.means tbody > tr:nth-child(even) {
+    background: #f2e3b7;
+    color: #4F3F00;
+}
+
+table.means tr *:first-child {
+    border-left: 1px solid #EBD898;
+    width: 30%;
+}
+
+table.means * {
+    padding: 5px;
+}
+
+.clearfix:before {
+    content: '';
+    display: table-cell;
+}
+
+.clearfix:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#tafseerBtn{
+    float: left;
+    color: #fff;
+    text-decoration: none;
+    padding: 0px 5px;
+    font:12px normal  'DroidArabicKufi', Arial;
+    margin-top: 10px;
+    border-bottom: 1px solid rgba(245,255,165,0.3);
+    background: #a28401;
+    border-radius:8px;
+    background-image: -moz-linear-gradient( 90deg, #907501 0%, #a28401 100%);
+    background-image: -webkit-linear-gradient( 90deg, #907501 0%, #a28401 100%);
+    background-image: -ms-linear-gradient( 90deg, #907501 0%, #a28401 100%);
+    border: 1px solid #947601;
+    box-shadow: 0px 0px 5px -2px #000;
+    position: fixed;
+    top: 5px;
+    right: 10px
+}
+#btn-close{
+    position: fixed;
+    top: 13px;
+    left: 10px;
+    background: #900;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+    font-size:25px;
+    text-align: center;
+    color: #fff;
+}
+
+.share-btn,.todo-btn{
+    float: left;
+    color: #FFF;
+    background: #ad891e;
+    padding: 7px 15px;
+    margin: 5px 5px;
+    display: inline-block;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #84650f;
+    box-shadow: -2px 2px 5px -2px #666;
+}
+.share-btn:hover,.todo-btn:hover{
+    background: #901203;
+    border: 1px solid #75110d;
+}
+.share-btn img{
+    width: 15px;
+}
+.todo-btn{
+    font-size: 15px;
+    width: 95%;
+    margin: 0px 2%;
+}

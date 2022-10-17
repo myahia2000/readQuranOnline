@@ -1,0 +1,41 @@
+<html><body>Please note that use of these MP3s is only allowed if you comply with the license details:
+<a href="http://www.versebyversequran.com/site/license">
+http://www.versebyversequran.com/site/license</a>
+
+<a id="demo"  target="_self"> GO </a>
+
+
+
+			<script> 
+	
+var path = window.location.pathname;
+var page = path.split("/").pop();
+var filename = page.slice(2, 5);
+
+function myFunction() {
+  var x = event.which || event.keyCode;
+  document.getElementById("demo").innerHTML = "The pressed key was: " + x;
+
+if (x== 37){var newpage = Number(filename) + 1;if (filename < 10){
+newurl= "P_00" + newpage+".html";
+document.getElementById("demo").href = newurl;}
+if (filename  >10 & filename <99){
+newurl= "P_0" + newpage+".html";
+document.getElementById("demo").href = newurl;}
+if (filename >99){
+newurl= "P_" + newpage+".html";
+document.getElementById("demo").href = newurl;}window.open(newurl,"_self");}
+
+if (x== 39){var newpage = Number(filename) - 1;if (filename < 10){
+newurl= "P_00" + newpage+".html";
+document.getElementById("demo").href = newurl;}
+if (filename  >10 & filename <99){
+newurl= "P_0" + newpage+".html";
+document.getElementById("demo").href = newurl;}
+if (filename >99){
+newurl= "P_" + newpage+".html";
+document.getElementById("demo").href = newurl;}window.open(newurl,"_self");}
+
+}
+</script>
+			</body></html>

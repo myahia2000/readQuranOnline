@@ -1,0 +1,21 @@
+﻿body
+{
+    margin: 0px;
+    padding: 0px;
+}
+.pageSpan
+{
+    line-height:155%;
+    font-size:14.7pt;
+}
+
+@font-face
+{
+    font-family: AQF_BSML;
+    src: url('AQF_BSML.svg#AQF_BSML') format('svg');
+}
+.MainPageTable
+{
+    overflow: visible; width: 100%;direction: rtl;z-index: 1;
+}
+

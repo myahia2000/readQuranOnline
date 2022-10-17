@@ -1,0 +1,14 @@
+﻿@import "Main.css";
+.imgFrame
+{
+    display:block;
+}
+.pageSpan
+{
+    font-size: 14.5pt;
+}
+.MainPageTable
+{
+     height: 95%
+    width:100%;
+}
