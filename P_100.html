@@ -59,24 +59,8 @@ if (x== 39){var newpage = Number(filename) - 1;
 
 }
 </script>
-	<script>
-    // تحميل ملف المعاني
-    fetch("meanings.json")
-      .then(response => response.json())
-      .then(data => {
-        document.querySelectorAll(".word_mean").forEach(span => {
-          const id = span.id; // زي word52_32_1
-          if (data[id]) {
-            // المعنى يظهر Tooltip عند الوقوف بالماوس
-            span.title = data[id];
+<script src="meanings.js"></script>
 
-            // لو حابب يظهر مباشرة جوه النص:
-            // span.innerText += " (" + data[id] + ")";
-          }
-        });
-      })
-      .catch(err => console.error("خطأ في تحميل ملف المعاني:", err));
-  </script>
 			</body>
 
 </html>
