@@ -259,7 +259,7 @@ body
         background-image: url('PageFram@2x.png'); /* actual image size = 396px by 64px */
         background-size: 320px 100%;
         width: 320px;
-        /*height: 100%;*/
+        height: 100%;
         background-repeat: no-repeat;
 		margin-left: auto;
     margin-right: auto;
@@ -306,4 +306,5 @@ a{
 @media screen and (device-aspect-ratio: 2/3) {
     a{line-height:150%;}
 }
-
+.demo {
+	display: none; }
