@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Base dimensions for content rendering
     // Increased to 400x700 to accommodate zoom: 125% in legacy CSS (320*1.25 = 400)
     // and extra vertical space to prevent bottom cropping (page number etc).
+    // Further increased to 740 to ensure bottom padding space.
     const baseWidth = 400;
-    const baseHeight = 700;
+    const baseHeight = 740;
 
     // Initialize
     function init() {
@@ -57,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         margin: 0 !important;
                         width: 100% !important;
                         height: 100% !important;
+                        padding-bottom: 20px !important; /* Add bottom spacing */
+                        box-sizing: border-box !important;
                     }
                     ::-webkit-scrollbar {
                         display: none;
@@ -204,6 +207,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadPage(currentPage + 1);
             }
         });
+
+        // Touchpad Swipe navigation (horizontal wheel event)
+        let isSwiping = false;
+        window.addEventListener('wheel', (e) => {
+            // Check for significant horizontal scroll
+            if (Math.abs(e.deltaX) > 30 && Math.abs(e.deltaY) < 20) {
+                if (isSwiping) return;
+
+                isSwiping = true;
+                // Debounce to prevent multiple page turns
+                setTimeout(() => { isSwiping = false; }, 800);
+
+                if (e.deltaX > 0) {
+                    // Swipe Left (deltaX positive) -> Next Page (in RTL context, left implies moving forward physically, but usually trackpad swipe left means content moves left, viewport moves right?
+                    // Let's stick to browser standard: deltaX > 0 is scrolling right.
+                    // If we scroll right, we want to see the "next" item in LTR, but in RTL...
+                    // Usually: Swipe Left (fingers move right) -> Go to Previous. Swipe Right (fingers move left) -> Go to Next.
+                    // Wait, standard convention: Two finger swipe Left -> Go Forward (History Next). Two finger swipe Right -> Go Back.
+                    // Here: Next Page (Forward). Prev Page (Back).
+
+                    // e.deltaX > 0 means scrolling to the right (content moves left). This is "Swipe Left" gesture (fingers move left).
+                    // This typically means "Next".
+                    loadPage(currentPage + 1);
+                } else {
+                    // Swipe Right (deltaX negative) -> Prev Page
+                    loadPage(currentPage - 1);
+                }
+            }
+        }, { passive: true });
     }
 
     function toggleSidebar() {
