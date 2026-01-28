@@ -306,5 +306,5 @@ a{
 @media screen and (device-aspect-ratio: 2/3) {
     a{line-height:150%;}
 }
-.demo {
+#demo {
 	display: none; }
