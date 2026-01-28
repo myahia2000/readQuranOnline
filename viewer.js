@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('main-content');
+    const pageContainer = document.getElementById('page-container');
 
     // Initialize
     function init() {
@@ -33,6 +34,35 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth <= 768) {
             sidebar.classList.remove('active'); // Hidden by default on mobile
         }
+
+        // Initial resize
+        adjustLayout();
+        // Listen for resize
+        window.addEventListener('resize', adjustLayout);
+
+        // Inject CSS to hide scrollbars when iframe loads
+        iframe.onload = function() {
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const style = doc.createElement('style');
+                style.textContent = `
+                    body {
+                        overflow: hidden !important;
+                        margin: 0 !important;
+                        width: 100% !important;
+                        height: 100% !important;
+                    }
+                    ::-webkit-scrollbar {
+                        display: none;
+                    }
+                    /* Hide potential navigation elements inside the page if any */
+                    .PageNumberDiv { display: none !important; }
+                `;
+                doc.head.appendChild(style);
+            } catch (e) {
+                console.warn("Cannot inject styles into iframe (CORS?):", e);
+            }
+        };
     }
 
     function renderSidebar() {
@@ -108,6 +138,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function adjustLayout() {
+        if (!pageContainer || !iframe) return;
+
+        const containerWidth = pageContainer.clientWidth;
+        const containerHeight = pageContainer.clientHeight;
+
+        // Base dimensions of the content (from Main.css)
+        const baseWidth = 320;
+        const baseHeight = 480;
+
+        // Padding/Margin safety
+        const padding = 0;
+
+        const availableWidth = containerWidth - padding;
+        const availableHeight = containerHeight - padding;
+
+        const scaleX = availableWidth / baseWidth;
+        const scaleY = availableHeight / baseHeight;
+
+        // Fit containment
+        let scale = Math.min(scaleX, scaleY);
+
+        // Apply scale
+        iframe.style.transform = `scale(${scale})`;
+    }
+
     function setupEventListeners() {
         prevBtn.addEventListener('click', () => loadPage(currentPage - 1));
         nextBtn.addEventListener('click', () => loadPage(currentPage + 1));
@@ -131,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth > 768) {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
+            // Adjust layout after transition (approx 300ms)
+            setTimeout(adjustLayout, 350);
         } else {
             sidebar.classList.toggle('active');
         }

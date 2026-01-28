@@ -107,6 +107,7 @@ body {
     justify-content: space-between;
     padding: 0 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex-shrink: 0;
 }
 
 .control-group {
@@ -164,16 +165,20 @@ input[type="number"] {
     align-items: center;
     overflow: hidden;
     position: relative;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
 }
 
 iframe {
     border: none;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    /* Mobile standard size is 320x480, we might want to scale it up on desktop */
+    /* Fixed base size, will be scaled by JS */
     width: 320px;
     height: 480px;
-    transition: transform 0.2s ease;
+    transform-origin: center center;
+    transition: transform 0.1s linear;
+    overflow: hidden;
 }
 
 /* Responsive */
@@ -199,5 +204,9 @@ iframe {
 
     .control-group {
         margin-top: 10px;
+    }
+
+    #page-container {
+        height: auto;
     }
 }
