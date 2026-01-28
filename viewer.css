@@ -4,7 +4,6 @@
     --text-color: #333;
     --bg-color: #f4f4f4;
     --active-item-bg: #e0e0e0;
-    --header-height: 60px;
 }
 
 body {
@@ -45,6 +44,35 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+/* Sidebar Controls */
+#sidebar-controls {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    flex: 1;
+}
+
+.page-jump {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+/* Surah List */
 #surah-list {
     flex: 1;
     overflow-y: auto;
@@ -91,31 +119,40 @@ body {
     height: 100%;
     transition: margin-left 0.3s ease;
     width: 100%;
+    position: relative;
 }
 
 #main-content.expanded {
     margin-left: 0;
 }
 
-/* Header / Navigation */
-#controls {
-    height: var(--header-height);
+/* Toggle Button - Floating */
+#sidebar-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+
+#sidebar-toggle:hover {
     background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    flex-shrink: 0;
+    color: var(--primary-color);
 }
 
-.control-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+/* Common Button Styles */
 button {
     padding: 8px 12px;
     background-color: var(--primary-color);
@@ -143,19 +180,6 @@ input[type="number"] {
     text-align: center;
 }
 
-/* Toggle Button */
-#sidebar-toggle {
-    background: none;
-    color: var(--text-color);
-    font-size: 20px;
-    padding: 5px;
-}
-
-#sidebar-toggle:hover {
-    background-color: #eee;
-    color: var(--primary-color);
-}
-
 /* Iframe Container */
 #page-container {
     flex: 1;
@@ -166,7 +190,7 @@ input[type="number"] {
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: 100vh; /* Full height */
 }
 
 iframe {
@@ -174,8 +198,8 @@ iframe {
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
     /* Fixed base size, will be scaled by JS */
-    width: 320px;
-    height: 480px;
+    width: 400px; /* Increased from 320px to match content width */
+    height: 600px; /* Increased from 480px to maintain aspect ratio */
     transform-origin: center center;
     transition: transform 0.1s linear;
     overflow: hidden;
@@ -195,18 +219,7 @@ iframe {
         margin-left: 0;
     }
 
-    #controls {
-        padding: 0 10px;
-        flex-wrap: wrap;
-        height: auto;
-        padding-bottom: 10px;
-    }
-
-    .control-group {
-        margin-top: 10px;
-    }
-
-    #page-container {
-        height: auto;
+    #sidebar-toggle {
+        left: 20px; /* Keep consistent position */
     }
 }

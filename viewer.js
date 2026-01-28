@@ -190,6 +190,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Ignore if typing in an input field
+            if (e.target.matches('input')) return;
+
+            if (e.key === 'ArrowLeft') {
+                // Left Arrow -> Previous Page
+                loadPage(currentPage - 1);
+            } else if (e.key === 'ArrowRight') {
+                // Right Arrow -> Next Page
+                loadPage(currentPage + 1);
+            }
+        });
     }
 
     function toggleSidebar() {
