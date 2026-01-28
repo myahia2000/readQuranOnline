@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageContainer = document.getElementById('page-container');
 
     // Base dimensions for content rendering
-    // Increased to 400x600 to accommodate zoom: 125% in legacy CSS (320*1.25 = 400)
-    // This prevents right-side cropping while maintaining aspect ratio.
+    // Increased to 400x640 to accommodate zoom: 125% in legacy CSS (320*1.25 = 400)
+    // and extra vertical space to prevent bottom cropping.
     const baseWidth = 400;
-    const baseHeight = 600;
+    const baseHeight = 640;
 
     // Initialize
     function init() {
