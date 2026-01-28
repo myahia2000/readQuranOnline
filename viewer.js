@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('main-content');
     const pageContainer = document.getElementById('page-container');
 
+    // Base dimensions for content rendering
+    // Increased to 400x600 to accommodate zoom: 125% in legacy CSS (320*1.25 = 400)
+    // This prevents right-side cropping while maintaining aspect ratio.
+    const baseWidth = 400;
+    const baseHeight = 600;
+
     // Initialize
     function init() {
         // Render Sidebar
@@ -59,6 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     .PageNumberDiv { display: none !important; }
                 `;
                 doc.head.appendChild(style);
+
+                // Re-adjust layout after load to ensure dimensions are correct
+                adjustLayout();
             } catch (e) {
                 console.warn("Cannot inject styles into iframe (CORS?):", e);
             }
@@ -141,12 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function adjustLayout() {
         if (!pageContainer || !iframe) return;
 
+        // Set the explicit dimensions on the iframe to match base dimensions
+        iframe.style.width = `${baseWidth}px`;
+        iframe.style.height = `${baseHeight}px`;
+
         const containerWidth = pageContainer.clientWidth;
         const containerHeight = pageContainer.clientHeight;
-
-        // Base dimensions of the content (from Main.css)
-        const baseWidth = 320;
-        const baseHeight = 480;
 
         // Padding/Margin safety
         const padding = 0;
