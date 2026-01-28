@@ -15,26 +15,27 @@
         <div class="sidebar-header">
             Surahs
         </div>
+
+        <div id="sidebar-controls">
+            <div class="nav-buttons">
+                <button id="btn-prev" title="Previous Page"><i class="fas fa-chevron-left"></i> Prev</button>
+                <button id="btn-next" title="Next Page">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="page-jump">
+                Page <input type="number" id="page-input" min="1" max="604" value="1">
+                <button id="btn-go">Go</button>
+            </div>
+        </div>
+
         <ul id="surah-list">
             <!-- Populated by JS -->
         </ul>
     </nav>
 
     <div id="main-content">
-        <header id="controls">
-            <button id="sidebar-toggle" title="Toggle Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <div class="control-group">
-                <button id="btn-prev" title="Previous Page"><i class="fas fa-chevron-left"></i> Prev</button>
-                <div class="page-jump">
-                    Page <input type="number" id="page-input" min="1" max="604" value="1">
-                    <button id="btn-go">Go</button>
-                </div>
-                <button id="btn-next" title="Next Page">Next <i class="fas fa-chevron-right"></i></button>
-            </div>
-        </header>
+        <button id="sidebar-toggle" title="Toggle Menu">
+            <i class="fas fa-bars"></i>
+        </button>
 
         <div id="page-container">
             <iframe id="quran-frame" src="P_001.html" title="Quran Page"></iframe>
