@@ -89,12 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="surah-number">${surah.number}. <span class="surah-name-en">${surah.nameEn}</span></span>
                 <span class="surah-name-ar">${surah.nameAr}</span>
             `;
-            li.addEventListener('click', () => {
-                loadPage(surah.startPage);
-                if (window.innerWidth <= 768) {
-                    toggleSidebar(); // Close sidebar on mobile after selection
-                }
-            });
             surahList.appendChild(li);
         });
     }
@@ -197,6 +191,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Surah List Navigation (Event Delegation)
+        surahList.addEventListener('click', (e) => {
+            const item = e.target.closest('.surah-item');
+            if (item && item.dataset.page) {
+                const startPage = parseInt(item.dataset.page);
+                loadPage(startPage);
+                if (window.innerWidth <= 768) {
+                    toggleSidebar(); // Close sidebar on mobile after selection
+                }
+            }
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
