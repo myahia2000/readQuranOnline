@@ -184,9 +184,8 @@ input[type="number"] {
 #page-container {
     flex: 1;
     background-color: #e8e8e8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Removed flex centering to rely on JS-calculated margins for precise scaling placement */
+    display: block;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -198,11 +197,13 @@ iframe {
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
     /* Fixed base size, will be scaled by JS */
-    width: 400px; /* Increased from 320px to match content width */
-    height: 600px; /* Increased from 480px to maintain aspect ratio */
-    transform-origin: center center;
+    width: 400px;
+    height: 600px; /* Fallback height */
+    /* Set transform origin to top-left to work with manual centering logic */
+    transform-origin: 0 0;
     transition: transform 0.1s linear;
     overflow: hidden;
+    display: block; /* Ensure no inline weirdness */
 }
 
 /* Responsive */
