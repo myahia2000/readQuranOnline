@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseWidth = 400;
     const baseHeight = 740;
 
+    let lastActiveSurahItem = null;
+
     // Initialize
     function init() {
         // Render Sidebar
@@ -134,10 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Remove active class from all
-        document.querySelectorAll('.surah-item').forEach(item => {
-            item.classList.remove('active');
-        });
+        // Remove active class from previous
+        if (lastActiveSurahItem) {
+            lastActiveSurahItem.classList.remove('active');
+            lastActiveSurahItem = null;
+        }
 
         // Add active class to current
         if (activeSurah) {
@@ -146,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 activeItem.classList.add('active');
                 // Scroll sidebar to show active item if needed
                 activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                lastActiveSurahItem = activeItem;
             }
         }
     }
