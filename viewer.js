@@ -106,6 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function closeSidebarMobile() {
+        if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    }
+
     function loadPage(page) {
         if (page < 1) page = 1;
         if (page > totalPages) page = totalPages;
@@ -133,6 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Active Surah in Sidebar
         highlightActiveSurah(page);
+
+        // Close sidebar on mobile when navigating
+        closeSidebarMobile();
     }
 
     function highlightActiveSurah(page) {
@@ -218,7 +227,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        sidebarToggle.addEventListener('click', toggleSidebar);
+        sidebarToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent document click from closing it immediately
+            toggleSidebar();
+        });
+
+        // Click outside sidebar to close it on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                // If click is not inside sidebar and not on the toggle button
+                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    closeSidebarMobile();
+                }
+            }
+        });
 
         // Surah List Navigation (Event Delegation)
         surahList.addEventListener('click', (e) => {
@@ -226,9 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item && item.dataset.page) {
                 const startPage = parseInt(item.dataset.page);
                 loadPage(startPage);
-                if (window.innerWidth <= 768) {
-                    toggleSidebar(); // Close sidebar on mobile after selection
-                }
+                // closeSidebarMobile() is called inside loadPage, so we don't need it here
             }
         });
 
@@ -246,7 +266,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Touchpad Swipe navigation (horizontal wheel event)
+        // Touch Swipe Navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeThreshold = 50; // Minimum distance to consider a swipe
+
+        // Use pageContainer to capture touches on the main content area
+        pageContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        pageContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const diff = touchEndX - touchStartX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                // Swipe detected
+                if (diff > 0) {
+                    // Swipe Right (Finger moves left to right) -> Previous Page
+                    // In RTL books (like Quran), moving "forward" (physically turning the page left) is a Right-to-Left swipe.
+                    // Moving "backward" (turning the page right) is a Left-to-Right swipe.
+                    // So:
+                    // Swipe Left (diff < 0) -> Next Page (Forward)
+                    // Swipe Right (diff > 0) -> Previous Page (Backward)
+                    loadPage(currentPage - 1);
+                } else {
+                    // Swipe Left (Finger moves right to left) -> Next Page
+                    loadPage(currentPage + 1);
+                }
+            }
+        }
+
+        // Touchpad Swipe navigation (horizontal wheel event) - Kept for desktop trackpads
         let isSwiping = false;
         window.addEventListener('wheel', (e) => {
             // Check for significant horizontal scroll
@@ -258,18 +313,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { isSwiping = false; }, 800);
 
                 if (e.deltaX > 0) {
-                    // Swipe Left (deltaX positive) -> Next Page (in RTL context, left implies moving forward physically, but usually trackpad swipe left means content moves left, viewport moves right?
-                    // Let's stick to browser standard: deltaX > 0 is scrolling right.
-                    // If we scroll right, we want to see the "next" item in LTR, but in RTL...
-                    // Usually: Swipe Left (fingers move right) -> Go to Previous. Swipe Right (fingers move left) -> Go to Next.
-                    // Wait, standard convention: Two finger swipe Left -> Go Forward (History Next). Two finger swipe Right -> Go Back.
-                    // Here: Next Page (Forward). Prev Page (Back).
-
-                    // e.deltaX > 0 means scrolling to the right (content moves left). This is "Swipe Left" gesture (fingers move left).
-                    // This typically means "Next".
+                    // Wheel deltaX > 0 means scrolling right (content moves left)
+                    // Analogous to Swipe Left gesture
                     loadPage(currentPage + 1);
                 } else {
-                    // Swipe Right (deltaX negative) -> Prev Page
+                    // Wheel deltaX < 0 means scrolling left
+                    // Analogous to Swipe Right gesture
                     loadPage(currentPage - 1);
                 }
             }
