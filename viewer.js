@@ -15,11 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageContainer = document.getElementById('page-container');
 
     // Base dimensions for content rendering
-    // Increased to 400x700 to accommodate zoom: 125% in legacy CSS (320*1.25 = 400)
-    // and extra vertical space to prevent bottom cropping (page number etc).
-    // Further increased to 740 to ensure bottom padding space.
     const baseWidth = 400;
-    const baseHeight = 740;
+    // Default base height, but we will try to read dynamic height
+    let currentContentHeight = 740;
 
     let lastActiveSurahItem = null;
 
@@ -34,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (pageParam && pageParam >= 1 && pageParam <= totalPages) {
             currentPage = pageParam;
+        }
+
+        // Set transform origin to top-left to simplify positioning logic
+        if (iframe) {
+            iframe.style.transformOrigin = '0 0';
         }
 
         loadPage(currentPage);
@@ -71,10 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 doc.head.appendChild(style);
 
+                // Try to get actual content height
+                if (doc.body && doc.body.scrollHeight > 100) {
+                     // Add some buffer for padding
+                    currentContentHeight = doc.body.scrollHeight + 40;
+                } else {
+                    currentContentHeight = 740; // Fallback
+                }
+
                 // Re-adjust layout after load to ensure dimensions are correct
                 adjustLayout();
             } catch (e) {
                 console.warn("Cannot inject styles into iframe (CORS?):", e);
+                // Fallback layout just in case
+                adjustLayout();
             }
         };
     }
@@ -98,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (page > totalPages) page = totalPages;
 
         currentPage = page;
+
+        // Reset height for new page load until onload fires
+        // currentContentHeight = 740;
 
         // Format filename: P_001.html, P_012.html, P_123.html
         const pageStr = String(page).padStart(3, '0');
@@ -153,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Set the explicit dimensions on the iframe to match base dimensions
         iframe.style.width = `${baseWidth}px`;
-        iframe.style.height = `${baseHeight}px`;
+        iframe.style.height = `${currentContentHeight}px`;
 
         const containerWidth = pageContainer.clientWidth;
         const containerHeight = pageContainer.clientHeight;
@@ -165,13 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const availableHeight = containerHeight - padding;
 
         const scaleX = availableWidth / baseWidth;
-        const scaleY = availableHeight / baseHeight;
+        const scaleY = availableHeight / currentContentHeight;
 
         // Fit containment
         let scale = Math.min(scaleX, scaleY);
+        // Ensure we don't scale up unnecessarily if it fits, but user likely wants 'fit to screen' behavior
+        // so we stick with min scale.
 
         // Apply scale
         iframe.style.transform = `scale(${scale})`;
+
+        // Center the iframe using margins since transform-origin is 0 0
+        const scaledWidth = baseWidth * scale;
+        const scaledHeight = currentContentHeight * scale;
+
+        const marginLeft = (availableWidth - scaledWidth) / 2;
+        const marginTop = (availableHeight - scaledHeight) / 2;
+
+        iframe.style.marginLeft = `${Math.max(0, marginLeft)}px`;
+        iframe.style.marginTop = `${Math.max(0, marginTop)}px`;
     }
 
     function setupEventListeners() {
