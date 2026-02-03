@@ -85,12 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 return;
                             }
 
+                            // RTL semantics: Left Arrow = next (forward), Right Arrow = previous (backward)
                             if (e.key === 'ArrowLeft') {
                                 e.preventDefault();
-                                loadPage(currentPage - 1);
+                                loadPage(currentPage + 1);
                             } else if (e.key === 'ArrowRight') {
                                 e.preventDefault();
-                                loadPage(currentPage + 1);
+                                loadPage(currentPage - 1);
                             }
                         });
                     }
@@ -295,17 +296,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Keyboard navigation
+        // Keyboard navigation (RTL book: "next" is Left Arrow, "previous" is Right Arrow)
         document.addEventListener('keydown', (e) => {
             // Ignore if typing in an input field
             if (e.target.matches('input')) return;
 
             if (e.key === 'ArrowLeft') {
-                // Left Arrow -> Previous Page
-                loadPage(currentPage - 1);
-            } else if (e.key === 'ArrowRight') {
-                // Right Arrow -> Next Page
+                // Left Arrow -> Next Page (forward in RTL book)
                 loadPage(currentPage + 1);
+            } else if (e.key === 'ArrowRight') {
+                // Right Arrow -> Previous Page (backward in RTL book)
+                loadPage(currentPage - 1);
             }
         });
 
