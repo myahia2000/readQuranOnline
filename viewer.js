@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 2) Inject CSS into the iframe document to hide scrollbars and unify layout
                 const style = doc.createElement('style');
                 style.textContent = `
-                    body {
+                    html, body {
                         overflow: hidden !important;
                         margin: 0 !important;
                         width: 100% !important;

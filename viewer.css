@@ -6,13 +6,17 @@
     --active-item-bg: #e0e0e0;
 }
 
+html,
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevent global scrollbars */
+}
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    height: 100vh;
-    overflow: hidden;
     background-color: var(--bg-color);
 }
 
@@ -117,13 +121,15 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    transition: margin-left 0.3s ease;
-    width: 100%;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    width: calc(100% - var(--sidebar-width)); /* Avoid horizontal overflow with fixed sidebar */
     position: relative;
+    overflow: hidden; /* No scrollbars inside main content */
 }
 
 #main-content.expanded {
     margin-left: 0;
+    width: 100%;
 }
 
 /* Toggle Button - Floating */
@@ -190,7 +196,7 @@ input[type="number"] {
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: 100vh; /* Full height */
+    height: 100%; /* Fill available height from main-content */
 }
 
 iframe {
