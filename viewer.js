@@ -52,10 +52,53 @@ document.addEventListener('DOMContentLoaded', () => {
         // Listen for resize
         window.addEventListener('resize', adjustLayout);
 
-        // Inject CSS to hide scrollbars when iframe loads
+        // Inject CSS to hide scrollbars and normalize behavior when iframe loads
         iframe.onload = function() {
             try {
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const win = iframe.contentWindow;
+                const doc = iframe.contentDocument || (win && win.document);
+                if (!doc) {
+                    adjustLayout();
+                    return;
+                }
+
+                // 1) Disable the original per-page keyboard navigation inside the Quran pages
+                //    so that it doesn't interfere with the viewer's own navigation / scaling.
+                try {
+                    // Remove inline handler on <body id="body" onkeydown="myFunction(event)">
+                    const bodyEl = doc.getElementById('body');
+                    if (bodyEl) {
+                        bodyEl.onkeydown = null;
+                    }
+
+                    // Neutralize any global handlers / functions the page defines
+                    if (win) {
+                        win.onkeydown = null;
+                        if (typeof win.myFunction === 'function') {
+                            win.myFunction = function () { /* disabled in viewer */ };
+                        }
+
+                        // Re‑attach arrow key navigation on the iframe window itself
+                        win.addEventListener('keydown', (e) => {
+                            // Ignore input fields inside the page, if any
+                            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                                return;
+                            }
+
+                            if (e.key === 'ArrowLeft') {
+                                e.preventDefault();
+                                loadPage(currentPage - 1);
+                            } else if (e.key === 'ArrowRight') {
+                                e.preventDefault();
+                                loadPage(currentPage + 1);
+                            }
+                        });
+                    }
+                } catch (innerErr) {
+                    console.warn('Could not normalize iframe key handlers:', innerErr);
+                }
+
+                // 2) Inject CSS into the iframe document to hide scrollbars and unify layout
                 const style = doc.createElement('style');
                 style.textContent = `
                     body {
