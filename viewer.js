@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', adjustLayout);
 
         // Inject CSS to hide scrollbars and normalize behavior when iframe loads
-        iframe.onload = function() {
+        iframe.onload = function () {
             try {
                 const win = iframe.contentWindow;
                 const doc = iframe.contentDocument || (win && win.document);
@@ -107,11 +107,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         margin: 0 !important;
                         width: 100% !important;
                         height: 100% !important;
-                        padding-bottom: 20px !important; /* Add bottom spacing */
+                        padding: 0 !important;
                         box-sizing: border-box !important;
                     }
+                    /* Hide scrollbars for Webkit browsers (Chrome, Safari, Edge) */
                     ::-webkit-scrollbar {
-                        display: none;
+                        display: none !important;
+                        width: 0 !important;
+                        height: 0 !important;
+                    }
+                    /* Hide scrollbars for Firefox */
+                    * {
+                        scrollbar-width: none !important;
+                    }
+                    /* Hide scrollbars for IE and old Edge */
+                    body {
+                        -ms-overflow-style: none !important;
                     }
                     /* Hide potential navigation elements inside the page if any */
                     .PageNumberDiv { display: none !important; }
@@ -222,6 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function adjustLayout() {
         if (!pageContainer || !iframe) return;
+
+        // Reset transform first to get accurate measurements
+        iframe.style.transform = 'none';
+        iframe.style.marginLeft = '0px';
+        iframe.style.marginTop = '0px';
 
         // Set the explicit dimensions on the iframe to match base dimensions
         iframe.style.width = `${baseWidth}px`;

@@ -1,14 +1,30 @@
 ﻿@import "Main.css";
-.imgFrame
-{
-    display:block;
+
+/* Hide scrollbars on all browsers */
+html,
+body {
+    overflow: hidden !important;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
-.pageSpan
-{
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari and Opera */
+}
+
+.imgFrame {
+    display: block;
+}
+
+.pageSpan {
     font-size: 14.5pt;
 }
-.MainPageTable
-{
-     height: 97%
-    width:100%;
+
+.MainPageTable {
+    height: 97%;
+    width: 100%;
 }
