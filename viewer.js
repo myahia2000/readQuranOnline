@@ -120,8 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Try to get actual content height
                 if (doc.body && doc.body.scrollHeight > 100) {
-                     // Add some buffer for padding
-                    currentContentHeight = doc.body.scrollHeight + 40;
+                    const measuredHeight = Math.max(
+                        doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                        doc.body.scrollHeight
+                    );
+                    currentContentHeight = Math.max(measuredHeight, 740);
                 } else {
                     currentContentHeight = 740; // Fallback
                 }
