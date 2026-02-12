@@ -10,6 +10,7 @@ var ayatForSuar=new Array();
 var this_elment=null;
 var mylatesttap=0;
 var autoHide=false;
+var lastActiveAyaId = null;
 var defaultColor="#000";
 var highlightColor="#f00";
 var backColor="#fdf6e2";
@@ -108,16 +109,13 @@ function addRule(sheet, selector, styles) {
 function ClearAll()
 {
     addRule(document.styleSheets[1], ".ayaColor",("color: "+defaultColor+";") );
-	for(i=0;i<ayatForSuar.length;i++){
-        AyaStart=1;
-        if(i==0)
-            AyaStart=start;
-        for(j=0;j<ayatForSuar[i];j++){
-            if(((AyaStart+j)==1)&&((sura+i)>1)&&((sura+i)!=9)){
-                document.getElementById('a'+(sura+i)+'_0').style.color = defaultColor;
-            }
-            document.getElementById('a'+(sura+i)+'_'+(AyaStart+j)).style.color = defaultColor;
+
+    if (lastActiveAyaId) {
+        var el = document.getElementById(lastActiveAyaId);
+        if (el) {
+            el.style.color = "";
         }
+        lastActiveAyaId = null;
     }
     
     document.body.style.background= backColor;
@@ -133,7 +131,10 @@ function ColorAya(aya)
     //alert(aya);
 	ClearAll();
 	var elementSelected = document.getElementById('a' + curSura + '_' + aya);
-	elementSelected.style.color= highlightColor;
+    if (elementSelected) {
+	    elementSelected.style.color= highlightColor;
+        lastActiveAyaId = elementSelected.id;
+    }
 }
 
 
